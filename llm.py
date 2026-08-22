@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """
-ask-foreign-llm: drive a remote LLM as an interactive agent with local tooling.
+ask-llm: drive a remote LLM as an interactive agent with local tooling.
 
 Bridge mode — local (default):
   Tool calls execute on the orchestrating machine.
 
-  python3 agent.py --cwd /path/to/project "Your message"
+  python3 llm.py --cwd /path/to/project "Your message"
 
 Bridge mode — SSH:
   Tool calls execute on a remote node via SSH. The remote node needs the repo
   and toolchain but does not need an agent runtime.
 
-  python3 agent.py --ssh-node <hostname> --ssh-cwd <remote-path> "Your message"
+  python3 llm.py --ssh-node <hostname> --ssh-cwd <remote-path> "Your message"
 
 Environment:
-  FOREIGN_AGENT_URL    OpenAI-compatible base URL of the remote model
-  FOREIGN_AGENT_MODEL  Model name to request
-  AGENT_SSH_USER       Username for SSH connections in bridge (SSH) mode
+  LLM_URL          OpenAI-compatible base URL of the remote model
+  LLM_MODEL        Model name to request
+  AGENT_SSH_USER   Username for SSH connections in bridge (SSH) mode
 """
 
 import argparse
@@ -31,8 +31,8 @@ from tools import TOOL_MAP, TOOLS
 from tools import _context
 from tools.bash import bash
 
-AGENT_URL = os.environ.get('FOREIGN_AGENT_URL', 'http://localhost:9337/v1')
-AGENT_MODEL = os.environ.get('FOREIGN_AGENT_MODEL', 'qwen3-coder-30b.gguf')
+LLM_URL = os.environ.get('LLM_URL', 'http://localhost:9337/v1')
+LLM_MODEL = os.environ.get('LLM_MODEL', 'qwen3-coder-30b.gguf')
 MAX_ITERATIONS = 400
 
 _FUNC_RE = re.compile(r'(?:<tool_call>\s*)?<function=(\w+)>(.*?)</function>\s*(?:</tool_call>)?', re.DOTALL)
@@ -41,9 +41,9 @@ _PARAM_RE = re.compile(r'<parameter=(\w+)>\s*(.*?)\s*</parameter>', re.DOTALL)
 
 def make_llm() -> ChatOpenAI:
     return ChatOpenAI(
-        base_url=AGENT_URL,
+        base_url=LLM_URL,
         api_key='none',
-        model=AGENT_MODEL,
+        model=LLM_MODEL,
         temperature=0,
     )
 
@@ -112,7 +112,7 @@ def run(message: str, prefix: str, tools: list, tool_map: dict) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='ask-foreign-llm: remote LLM as agent')
+    parser = argparse.ArgumentParser(description='ask-llm: remote LLM as agent')
     parser.add_argument('message', nargs='+', help='Message to send to the agent')
     parser.add_argument('--cwd', default='.', help='Local working directory for bridge mode tool execution')
     parser.add_argument('--ssh-node', default='', help='Remote node hostname for bridge (SSH) mode')
@@ -127,7 +127,7 @@ def main() -> None:
         active_tool_map = {'bash': bash}
     else:
         _context.working_directory = os.path.abspath(args.cwd)
-        prefix = 'remote-llm'
+        prefix = 'llm'
         active_tools = TOOLS
         active_tool_map = TOOL_MAP
 

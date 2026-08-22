@@ -1,5 +1,5 @@
 [project]
-name = "ask-foreign-llm-skill"
+name = "ask-llm-skill"
 version = "0.1.0"
 description = "Drive a remote LLM as an interactive agent with local tooling (bridge mode)"
 requires-python = ">=3.11"

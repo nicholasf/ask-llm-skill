@@ -1,4 +1,4 @@
-# Ask Foreign LLM
+# Ask LLM
 
 Drive a remote LLM as an interactive agent. The LLM runs on the remote node;
 tool calls execute either locally (bridge local) or on the remote node via SSH
@@ -18,7 +18,7 @@ its inference server is active:
 curl -s http://<hostname>:9337/v1/models
 ```
 
-Set `$FOREIGN_AGENT_URL` and `$FOREIGN_AGENT_MODEL` to target the node.
+Set `$LLM_URL` and `$LLM_MODEL` to target the node.
 
 ---
 
@@ -28,8 +28,8 @@ The LLM runs on the remote node; tool calls execute on the orchestrating
 machine. Use when working against the local codebase.
 
 ```bash
-"${SKILLS_HOME:-$HOME/.agents/skills}/ask-remote-llm/.venv/bin/python3" \
-  "${SKILLS_HOME:-$HOME/.agents/skills}/ask-remote-llm/agent.py" \
+"${SKILLS_HOME:-$HOME/.agents/skills}/ask-llm-skill/.venv/bin/python3" \
+  "${SKILLS_HOME:-$HOME/.agents/skills}/ask-llm-skill/llm.py" \
   --cwd <working directory> \
   "<message>"
 ```
@@ -56,8 +56,8 @@ via SSH. Use when the target node has the repo and toolchain but no agent
 runtime. `$AGENT_SSH_USER` must be set.
 
 ```bash
-"${SKILLS_HOME:-$HOME/.agents/skills}/ask-remote-llm/.venv/bin/python3" \
-  "${SKILLS_HOME:-$HOME/.agents/skills}/ask-remote-llm/agent.py" \
+"${SKILLS_HOME:-$HOME/.agents/skills}/ask-llm-skill/.venv/bin/python3" \
+  "${SKILLS_HOME:-$HOME/.agents/skills}/ask-llm-skill/llm.py" \
   --ssh-node <hostname> \
   --ssh-cwd <remote working directory> \
   "<message>"
@@ -77,4 +77,4 @@ In SSH mode only `bash` is exposed — commands execute on the remote node via S
 
 Invoke when the user says "ask [node]", "what does [node] think", or
 "let [node] look at this" and no agent runtime (Hermes/Goose) is available
-on that node. For autonomous agent delegation use ask-foreign-agent-skill.
+on that node. For autonomous agent delegation use ask-agent-skill.

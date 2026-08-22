@@ -1,11 +1,11 @@
-# ask-remote-llm
+# ask-llm
 
 Drive a remote LLM as an interactive agent. The LLM runs on a node in your
 topology; tool calls execute on the orchestrating machine.
 
 For fully autonomous agent delegation — where the remote node runs its own
 agent like Hermes or Goose — use
-[ask-foreign-agent-skill](https://github.com/nicholasf/ask-foreign-agent-skill)
+[ask-agent-skill](https://github.com/nicholasf/ask-agent-skill)
 instead.
 
 ---
@@ -15,7 +15,7 @@ instead.
 ### Invoke the skill
 
 ```
-/ask-remote-llm
+/ask-llm
 ```
 
 Or with natural language triggers:
@@ -36,7 +36,7 @@ Output is prefixed with the node name:
 ### Direct invocation
 
 ```bash
-python3 agent.py --cwd /path/to/project "Summarise how authentication works"
+python3 llm.py --cwd /path/to/project "Summarise how authentication works"
 ```
 
 ---
@@ -73,8 +73,8 @@ for the full naming convention.
 Set these environment variables to target a node:
 
 ```bash
-export FOREIGN_AGENT_URL=http://<hostname>:9337/v1
-export FOREIGN_AGENT_MODEL=<model-name>
+export LLM_URL=http://<hostname>:9337/v1
+export LLM_MODEL=<model-name>
 ```
 
 ---
