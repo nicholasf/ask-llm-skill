@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ask-llm: drive a remote LLM as an interactive agent with local tooling.
+ask-llm: drive an LLM as an interactive agent with local tooling.
 
 Bridge mode — local (default):
   Tool calls execute on the orchestrating machine.
@@ -14,7 +14,7 @@ Bridge mode — SSH:
   python3 llm.py --ssh-node <hostname> --ssh-cwd <remote-path> "Your message"
 
 Environment:
-  LLM_URL          OpenAI-compatible base URL of the remote model
+  LLM_URL          OpenAI-compatible base URL of the model
   LLM_MODEL        Model name to request
   AGENT_SSH_USER   Username for SSH connections in bridge (SSH) mode
 """
@@ -112,7 +112,7 @@ def run(message: str, prefix: str, tools: list, tool_map: dict) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='ask-llm: remote LLM as agent')
+    parser = argparse.ArgumentParser(description='ask-llm: LLM as agent')
     parser.add_argument('message', nargs='+', help='Message to send to the agent')
     parser.add_argument('--cwd', default='.', help='Local working directory for bridge mode tool execution')
     parser.add_argument('--ssh-node', default='', help='Remote node hostname for bridge (SSH) mode')

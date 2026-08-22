@@ -1,6 +1,6 @@
 # Ask LLM
 
-Drive a remote LLM as an interactive agent. The LLM runs on the remote node;
+Drive an LLM as an interactive agent. The LLM runs on the remote node;
 tool calls execute either locally (bridge local) or on the remote node via SSH
 (bridge SSH). All output is prefixed with `[node-name]`.
 
@@ -11,7 +11,7 @@ Refer to agents as `<machine>-<llm>-agent`, e.g. `dtv-claude-agent`,
 
 ## Before invoking
 
-Read the topology (load-topology-skill) to find the node hostname and verify
+Read the topology (topology-skill) to find the node hostname and verify
 its inference server is active:
 
 ```bash

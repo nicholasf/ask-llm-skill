@@ -1,6 +1,6 @@
 # ask-llm
 
-Drive a remote LLM as an interactive agent. The LLM runs on a node in your
+Drive an LLM as an interactive agent. The LLM runs on a node in your
 topology; tool calls execute on the orchestrating machine.
 
 For fully autonomous agent delegation — where the remote node runs its own
@@ -43,7 +43,7 @@ python3 llm.py --cwd /path/to/project "Summarise how authentication works"
 
 ## How it works
 
-The remote LLM receives a task and calls tools in a loop until it is done. Tool calls execute on the orchestrating machine and results are returned to the LLM.
+The LLM receives a task and calls tools in a loop until it is done. Tool calls execute on the orchestrating machine and results are returned to the LLM.
 
 ```
 dtv-claude-agent
@@ -59,15 +59,15 @@ dtv-claude-agent
 
 ---
 
-## Dependency on load-topology-skill
+## Dependency on topology-skill
 
-[load-topology-skill](https://github.com/nicholasf/load-topology-skill) is the
+[topology-skill](https://github.com/nicholasf/topology-skill) is the
 source of truth for which nodes are available and what models they are running.
 Before invoking, read the topology to confirm the target node is online and its
 inference server is active.
 
 Nodes are referred to by their **agent handle** — `<machine>-<llm>`, e.g.
-`pond-qwen`, `gollum-mistral`. See [load-topology-skill](https://github.com/nicholasf/load-topology-skill)
+`pond-qwen`, `gollum-mistral`. See [topology-skill](https://github.com/nicholasf/topology-skill)
 for the full naming convention.
 
 Set these environment variables to target a node:
